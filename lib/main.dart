@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'input_form_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,15 +56,21 @@ class IntroScreen extends StatelessWidget {
               const SizedBox(height: 45), // 간격
 
               // 주요 기능 리스트
-              const FeatureItem(
+               FeatureItem(
                 icon: Icons.search,
                 text: '신용점수 예측',
+                 onTap:() {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InputFormPage()),
+                  );
+                 }
               ),
-              const FeatureItem(
+               FeatureItem(
                 icon: Icons.monetization_on,
                 text: '맞춤 대출 상품 추천',
               ),
-              const FeatureItem(
+               FeatureItem(
                 icon: Icons.history,
                 text: '신청 현황 확인',
               ),
@@ -74,7 +81,9 @@ class IntroScreen extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    // 나중에 페이지 이동 등 기능 붙일 예정
+                    Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => InputFormPage()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colorScheme.primary,
@@ -102,10 +111,14 @@ class FeatureItem extends StatelessWidget {
   final IconData icon;
   final String text;
 
+  //메뉴선택시 이동가능하도록 구현
+  final VoidCallback? onTap;
+
   const FeatureItem({
     required this.icon,
     required this.text,
     super.key,
+    this.onTap
   });
 
   @override
@@ -114,7 +127,10 @@ class FeatureItem extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Row(
+      child: InkWell(
+        onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+      child:  Row(
         children: [
           Icon(icon, size: 28, color: colorScheme.primary),
           const SizedBox(width: 12),
@@ -123,6 +139,7 @@ class FeatureItem extends StatelessWidget {
             style: const TextStyle(fontSize: 16),
           ),
         ],
+      ),
       ),
     );
   }
